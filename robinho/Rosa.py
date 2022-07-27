@@ -8,7 +8,7 @@ COLUMNS = ["Ruolo", "Giocatore", "Prezzo", "Valore"]
 class Rosa:
     def __init__(self) -> None:
         self._acquisti = pd.DataFrame(columns=ROSA_DF_COLUMNS)
-        self._data = pd.DataFrame(columns=COLUMNS)
+        self._data = pd.DataFrame(columns=COLUMN)
 
     def inserisci_giocatore(self, ruolo: str, nome: str, prezzo: int, valore: int):
         nuovo_giocatore = pd.DataFrame(

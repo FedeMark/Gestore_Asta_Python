@@ -5,6 +5,7 @@ class InserimentoAcquistoLayout(QVBoxLayout):
   def __init__(self, text: str) -> None:
         super().__init__()
         
+        self._button_slot_model = None
         title = QLabel()
         title.setText("Assegna un giocatore:")
         self.addWidget(title)
@@ -14,6 +15,7 @@ class InserimentoAcquistoLayout(QVBoxLayout):
         self._squadra = SingleField()
         self._prezzo = SingleField()
         self._confirm_button = QPushButton("Inserisci")
+        self._confirm_button.clicked.connect(self._button_slot)
         
         fields_layout.addWidget(self._nome)
         fields_layout.addWidget(self._squadra)
@@ -22,7 +24,13 @@ class InserimentoAcquistoLayout(QVBoxLayout):
         
         self.addLayout(fields_layout)
         
-        
-  def set_button_listener(self, listener) -> :
-    self._confirm_button.clicked.connect(listener)
+  @Slot      
+  def _button_slot(self) -> None:
+    nome = self._nome.text()
+    prezzo = int(self._prezzo.text())
+    squadra = self.squadra.text()
     
+    self._button_slot_model(nome, squadra, prezzo)
+    
+  def set_button_slot(self, slot) -> None:
+    self._button_slot_model = slot

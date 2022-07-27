@@ -52,5 +52,5 @@ class MainWindow(QWidget):
     def set_stats_model(self, stats_model) -> None:
         self._stats_widget.setModel(stats_model)
 
-    def set_inserimento_acquisto_button_listener(self, listener):
-      self._inserimento_acquisto_layout.set_button_listener(listener)
+    def set_inserimento_acquisto_button_slot(self, slot):
+      self._inserimento_acquisto_layout.set_button_slot(slot)
