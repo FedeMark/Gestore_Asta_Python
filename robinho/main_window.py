@@ -22,15 +22,8 @@ class MainWindow(QWidget):
         main_layout = QHBoxLayout()
 
         left_layout = QVBoxLayout()
-
-        nuovo_acquisto_layout = QVBoxLayout()
-        title = QLabel()
-        title.setText("Assegna un giocatore:")
-        nuovo_acquisto_layout.addWidget(title)
-        inserimento_acquisto_layout = QHBoxLayout()
-
-        nuovo_acquisto_layout.addLayout(inserimento_acquisto_layout)
-        left_layout.addLayout(nuovo_acquisto_layout)
+        self._inserimento_acquisto_layout = InserimentoAcquistoLayout()
+        left_layout.addLayout(self._inserimento_acquisto_layout)
 
         self._listone_widget = QTableView()
         left_layout.addWidget(self._listone_widget)
@@ -58,3 +51,6 @@ class MainWindow(QWidget):
 
     def set_stats_model(self, stats_model) -> None:
         self._stats_widget.setModel(stats_model)
+
+    def set_inserimento_acquisto_button_listener(self, listener):
+      self._inserimento_acquisto_layout.set_button_listener(listener)
