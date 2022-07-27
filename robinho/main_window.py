@@ -10,6 +10,7 @@ import pandas as pd
 from robinho.Squadra import Squadra
 
 from robinho.pandas_model import PandasModel
+from robinho.inserimento_acquisto_layout import InserimentoAcquistoLayout
 
 
 class MainWindow(QWidget):
@@ -53,4 +54,4 @@ class MainWindow(QWidget):
         self._stats_widget.setModel(stats_model)
 
     def set_inserimento_acquisto_button_slot(self, slot):
-      self._inserimento_acquisto_layout.set_button_slot(slot)
+        self._inserimento_acquisto_layout.set_button_slot(slot)

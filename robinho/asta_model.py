@@ -14,7 +14,12 @@ class AstaModel:
         return PandasModel(self._lega.get_stats_squadre())
 
     def get_rosa_model(self, index: int = 0):
-        return PandasModel(self._lega.get_squadra_rosa(index)).
-    
-    def inserisci_giocatore(self, nome_squadra: str, nome: str, prezzo: int,) -> None:
-      self._lega.inserisci_giocatore(nome_squadra, nome, prezzo)
+        return PandasModel(self._lega.get_squadra_rosa(index))
+
+    def inserisci_giocatore(
+        self,
+        nome_squadra: str,
+        nome: str,
+        prezzo: int,
+    ) -> None:
+        self._lega.inserisci_giocatore(nome_squadra, nome, prezzo)

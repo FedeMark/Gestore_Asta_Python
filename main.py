@@ -19,3 +19,7 @@ def main():  # nome_lega: str, nomi_squadre: List[str]):
     main_window.set_rosa_model(asta_model.get_rosa_model())
     main_window.set_stats_model(asta_model.get_stats_model())
     main_window.set_inserimento_acquisto_button_slot(asta_model.inserisci_giocatore)
+
+
+if __name__ == "__main__":
+    fire.Fire(main)
