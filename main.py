@@ -9,12 +9,14 @@ from robinho.main_window import MainWindow
 
 
 def main():  # nome_lega: str, nomi_squadre: List[str]):
-    lega = Lega(nome_lega="Fantalega", nomi_squadre=["S1", "S2"])
+    lega = Lega(
+        nome_lega="Fantalega", nomi_squadre=["Squadra " + str(i + 1) for i in range(8)]
+    )
     asta_model = AstaModel(lega)
 
     app = QApplication(sys.argv)
     main_window = MainWindow(asta_model)
-    main_window.show()
+    main_window.showMaximized()
 
     app.exec()
 

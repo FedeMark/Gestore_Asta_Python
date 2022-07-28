@@ -11,6 +11,9 @@ class AstaModel:
     def get_listone_model(self):
         return PandasModel(self._lega.get_listone())
 
+    def get_nome_lega(self) -> str:
+        return self._lega.get_nome()
+
     def get_stats_model(self):
         return PandasModel(self._lega.get_stats_squadre())
 
@@ -29,6 +32,16 @@ class AstaModel:
         nome: str,
         prezzo: int,
     ) -> bool:
-        return self._lega.inserisci_giocatore(
+        result = self._lega.inserisci_giocatore(
             nome_squadra=nome_squadra, nome=nome, prezzo=prezzo
         )
+
+        self.save_data()
+
+        return result
+
+    def load_data(self) -> None:
+        self._lega = Lega.load_data()
+
+    def save_data(self):
+        self._lega.save_data()

@@ -1,5 +1,5 @@
 from typing import List
-from PySide6.QtWidgets import QHBoxLayout, QPushButton, QVBoxLayout, QLabel
+from PySide6.QtWidgets import QHBoxLayout, QPushButton, QVBoxLayout, QLabel, QMessageBox
 from robinho.single_field import SingleField
 
 
@@ -28,10 +28,18 @@ class InserimentoAcquistoLayout(QVBoxLayout):
 
     def _button_slot(self) -> None:
         nome = self._nome.get_input()
-        prezzo = int(self._prezzo.get_input())
+        prezzo = self._prezzo.get_input()
+
+        if (not prezzo.isnumeric()) or (int(prezzo) <= 0):
+            dialog = QMessageBox()
+            dialog.setText("Prezzo non valido.")
+            dialog.exec()
+
+            return
+
         squadra = self._squadra.get_input()
 
-        self._button_slot_model(nome_squadra=squadra, nome=nome, prezzo=prezzo)
+        self._button_slot_model(nome_squadra=squadra, nome=nome, prezzo=int(prezzo))
 
     def set_button_slot(self, slot) -> None:
         self._button_slot_model = slot
