@@ -1,4 +1,6 @@
+from typing import Any, Union
 from PySide6 import QtCore
+import PySide6
 
 
 class PandasModel(QtCore.QAbstractTableModel):

@@ -12,13 +12,11 @@ def main():  # nome_lega: str, nomi_squadre: List[str]):
     lega = Lega(nome_lega="Fantalega", nomi_squadre=["S1", "S2"])
     asta_model = AstaModel(lega)
 
-    app = QApplication([])
+    app = QApplication(sys.argv)
+    main_window = MainWindow(asta_model)
+    main_window.show()
 
-    main_window = MainWindow()
-    main_window.set_listone_model(asta_model.get_listone_model())
-    main_window.set_rosa_model(asta_model.get_rosa_model())
-    main_window.set_stats_model(asta_model.get_stats_model())
-    main_window.set_inserimento_acquisto_button_slot(asta_model.inserisci_giocatore)
+    app.exec()
 
 
 if __name__ == "__main__":

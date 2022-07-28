@@ -39,5 +39,5 @@ class Squadra:
     def get_rosa(self) -> pd.DataFrame:
         return self._rosa.get_data()
 
-    def inserisci_giocatore(self, ruolo: str,  nome: str, prezzo: int, valore: int):
-      self._rosa.inserisci_giocatore(ruolo,nome,prezzo, valore)
+    def inserisci_giocatore(self, ruolo: str, nome: str, prezzo: int, valore: int):
+        self._rosa.inserisci_giocatore(ruolo, nome, prezzo, valore)
