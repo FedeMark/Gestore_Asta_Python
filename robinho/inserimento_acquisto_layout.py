@@ -26,6 +26,13 @@ class InserimentoAcquistoLayout(QVBoxLayout):
 
         self.addLayout(fields_layout)
 
+    def reset(self) -> None:
+        self._nome.reset()
+        self._prezzo.reset()
+
+    def update_nomi(self, nomi_giocatori):
+        self._nome = SingleField("Nome", completer_list=nomi_giocatori)
+
     def _button_slot(self) -> None:
         nome = self._nome.get_input()
         prezzo = self._prezzo.get_input()

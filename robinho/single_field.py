@@ -31,3 +31,7 @@ class SingleField(QHBoxLayout):
             return self._field.text()
 
         return self._field.currentText()
+
+    def reset(self) -> None:
+        if self._choices is None:
+            self._field.setText('')

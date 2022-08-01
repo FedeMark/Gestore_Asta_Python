@@ -9,9 +9,18 @@ from robinho.main_window import MainWindow
 
 
 def main():  # nome_lega: str, nomi_squadre: List[str]):
-    lega = Lega(
-        nome_lega="Fantalega", nomi_squadre=["Squadra " + str(i + 1) for i in range(8)]
-    )
+    # nomi_squadre = ["Squadra " + str(i + 1) for i in range(8)]
+    nomi_squadre = [
+        "Injured FC",
+        "I fuffoli",
+        "Parmareggio",
+        "GrifonDoro",
+        "RealMalvasia79",
+        "FC Gigio",
+        "Fossa dei leoni",
+        "ScaccoFC",
+    ]
+    lega = Lega(nome_lega="Fanta e cola", nomi_squadre=nomi_squadre)
     asta_model = AstaModel(lega)
 
     app = QApplication(sys.argv)

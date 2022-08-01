@@ -1,3 +1,4 @@
+from typing import List
 from PySide6.QtWidgets import (
     QWidget,
     QHBoxLayout,
@@ -12,6 +13,7 @@ from robinho.asta_model import AstaModel
 from robinho.dataframes_layouts.rosa_layout import RosaLayout
 
 from robinho.inserimento_acquisto_layout import InserimentoAcquistoLayout
+from robinho.ruoli_checkboxes import RuoliCheckboxes
 
 
 class MainWindow(QMainWindow):
@@ -41,6 +43,8 @@ class MainWindow(QMainWindow):
 
         left_layout = QVBoxLayout()
         self._listone_widget = QTableView()
+        self._listone_checkboxes = RuoliCheckboxes(["P", "D", "C", "A"])
+        left_layout.addLayout(self._listone_checkboxes)
         left_layout.addWidget(self._listone_widget)
 
         self._rosa_layout = RosaLayout(self._asta_model.get_nomi_squadre())
@@ -82,6 +86,12 @@ class MainWindow(QMainWindow):
         self._set_rosa_model()
         self._set_stats_model()
 
+        self._listone_checkboxes.set_slot(self._checkboxes_slot)
+
+    def _checkboxes_slot(self):
+        ruoli = self._listone_checkboxes.get_checked()
+        self._set_listone_model(ruoli=ruoli)
+
     def _inserisci_giocatore(
         self,
         nome_squadra: str,
@@ -96,6 +106,10 @@ class MainWindow(QMainWindow):
         if result:
             self._update_views()
             self._save_data()
+            self._inserimento_acquisto_layout.reset()
+            self._inserimento_acquisto_layout.update(
+                self._asta_model.get_nomi_giocatori()
+            )
         else:
             dialog = QMessageBox(self)
             dialog.setText("Giocatore non presente in lista o già assegnato.")
@@ -109,8 +123,8 @@ class MainWindow(QMainWindow):
     def _save_data(self) -> None:
         self._asta_model.save_data()
 
-    def _set_listone_model(self) -> None:
-        listone_model = self._asta_model.get_listone_model()
+    def _set_listone_model(self, ruoli: List[str] = ["P", "D", "C", "A"]) -> None:
+        listone_model = self._asta_model.get_listone_model(ruoli=ruoli)
         self._listone_widget.setModel(listone_model)
 
     def _set_rosa_model(self, index: int = 0) -> None:

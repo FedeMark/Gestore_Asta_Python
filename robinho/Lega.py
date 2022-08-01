@@ -58,8 +58,8 @@ class Lega:
         for squadra in self._squadre.values():
             squadra.save_data(squadre_dir_path)
 
-    def get_listone(self) -> pd.DataFrame:
-        return self._listone
+    def get_listone(self, ruoli: List[str]) -> pd.DataFrame:
+        return self._listone[self._listone[LISTONE_COLUMNS[0]].isin(ruoli)]
 
     def get_nome(self) -> str:
         return self._nome_lega
@@ -134,7 +134,7 @@ class Lega:
         dir_path = load_path / nome_lega
 
         info_lega = np.load(dir_path / (nome_lega + ".npz"))
-        nome_lega = info_lega["nome_lega"]
+        # nome_lega = info_lega["nome_lega"]
         nomi_squadre = info_lega["nomi_squadre"]
         crediti_iniziali = info_lega["crediti_iniziali"]
 

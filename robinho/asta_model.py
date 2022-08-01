@@ -8,8 +8,8 @@ class AstaModel:
     def __init__(self, lega: Lega) -> None:
         self._lega = lega
 
-    def get_listone_model(self):
-        return PandasModel(self._lega.get_listone())
+    def get_listone_model(self, ruoli: List[str]):
+        return PandasModel(self._lega.get_listone(ruoli=ruoli))
 
     def get_nome_lega(self) -> str:
         return self._lega.get_nome()
@@ -41,7 +41,7 @@ class AstaModel:
         return result
 
     def load_data(self) -> None:
-        self._lega = Lega.load_data()
+        self._lega = Lega.load_data(nome_lega=self._lega._nome_lega)
 
     def save_data(self):
         self._lega.save_data()
