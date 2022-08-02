@@ -7,8 +7,10 @@ class Rosa:
     def __init__(self) -> None:
         self._data = pd.DataFrame(columns=ROSA_DF_COLUMNS)
 
-    def inserisci_giocatore(self, ruolo: str, nome: str, prezzo: int, valore: int):
-        nuovo_giocatore_dict = dict(zip(ROSA_DF_COLUMNS, [ruolo, nome, prezzo, valore]))
+    def inserisci_giocatore(
+        self, ruolo: str, nome: str, prezzo: int, valore: int, slot: int
+    ):
+        nuovo_giocatore_dict = dict(zip(ROSA_DF_COLUMNS, [ruolo, nome, prezzo, valore, slot]))
         nuovo_giocatore = pd.DataFrame(nuovo_giocatore_dict, index=[0])
         self._data = pd.concat([self._data, nuovo_giocatore])
 

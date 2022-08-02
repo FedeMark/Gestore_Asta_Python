@@ -107,7 +107,7 @@ class MainWindow(QMainWindow):
             self._update_views()
             self._save_data()
             self._inserimento_acquisto_layout.reset()
-            self._inserimento_acquisto_layout.update(
+            self._inserimento_acquisto_layout.update_nomi(
                 self._asta_model.get_nomi_giocatori()
             )
         else:

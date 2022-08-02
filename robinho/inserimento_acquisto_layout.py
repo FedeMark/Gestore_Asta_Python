@@ -1,5 +1,12 @@
 from typing import List
-from PySide6.QtWidgets import QHBoxLayout, QPushButton, QVBoxLayout, QLabel, QMessageBox
+from PySide6.QtWidgets import (
+    QHBoxLayout,
+    QPushButton,
+    QVBoxLayout,
+    QLabel,
+    QMessageBox,
+    QCompleter,
+)
 from robinho.single_field import SingleField
 
 
@@ -31,7 +38,8 @@ class InserimentoAcquistoLayout(QVBoxLayout):
         self._prezzo.reset()
 
     def update_nomi(self, nomi_giocatori):
-        self._nome = SingleField("Nome", completer_list=nomi_giocatori)
+        completer = QCompleter(nomi_giocatori)
+        self._nome._field.setCompleter(completer)
 
     def _button_slot(self) -> None:
         nome = self._nome.get_input()

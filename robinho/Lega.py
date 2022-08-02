@@ -99,8 +99,10 @@ class Lega:
         giocatore = giocatore.iloc[0]
         ruolo = giocatore[LISTONE_COLUMNS[0]]
         valore = giocatore[LISTONE_COLUMNS[3]]
+        slot = giocatore[LISTONE_COLUMNS[5]]
 
-        self._squadre[nome_squadra].inserisci_giocatore(ruolo, nome, prezzo, valore)
+
+        self._squadre[nome_squadra].inserisci_giocatore(ruolo, nome, prezzo, valore, slot)
         self._listone = listone[listone[LISTONE_COLUMNS[1]] != nome]
 
         return True
