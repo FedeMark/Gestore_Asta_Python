@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QCompleter,
 )
-from robinho.single_field import SingleField
+from robinho.layouts.single_field import SingleField
 
 
 class InserimentoAcquistoLayout(QVBoxLayout):

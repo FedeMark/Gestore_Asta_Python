@@ -34,7 +34,7 @@ class Squadra:
                     self._nome,
                     self._crediti_iniziali - spesa_totale,
                     valore_totale,
-                    valore_totale / spesa_totale_div,
+                    round(valore_totale / spesa_totale_div, 2),
                     get_series_value(counts, "P"),
                     get_series_value(counts, "D"),
                     get_series_value(counts, "C"),
@@ -48,11 +48,13 @@ class Squadra:
     def get_rosa(self) -> pd.DataFrame:
         return self._rosa.get_data()
 
-    def inserisci_giocatore(self, ruolo: str, nome: str, prezzo: int, valore: int, slot: int):
+    def inserisci_giocatore(
+        self, ruolo: str, nome: str, prezzo: int, valore: int, slot: int
+    ):
         self._rosa.inserisci_giocatore(ruolo, nome, prezzo, valore, slot)
 
     def save_data(self, save_path: Path):
-        data = self._rosa.get_data()
+        data = self._rosa.get_data_to_save()
         data.to_csv(save_path / (self._nome + ".csv"))
 
     def load_data(self, load_path: Path) -> None:

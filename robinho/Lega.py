@@ -1,7 +1,7 @@
 from __future__ import annotations
 import os
 from pathlib import Path
-from typing import List
+from typing import List, Optional, Tuple
 import numpy as np
 import pandas as pd
 
@@ -99,10 +99,11 @@ class Lega:
         giocatore = giocatore.iloc[0]
         ruolo = giocatore[LISTONE_COLUMNS[0]]
         valore = giocatore[LISTONE_COLUMNS[3]]
-        slot = giocatore[LISTONE_COLUMNS[5]]
+        slot = giocatore[LISTONE_COLUMNS[4]]
 
-
-        self._squadre[nome_squadra].inserisci_giocatore(ruolo, nome, prezzo, valore, slot)
+        self._squadre[nome_squadra].inserisci_giocatore(
+            ruolo, nome, prezzo, valore, slot
+        )
         self._listone = listone[listone[LISTONE_COLUMNS[1]] != nome]
 
         return True
@@ -132,10 +133,14 @@ class Lega:
     @classmethod
     def load_data(
         cls, load_path: Path = DEFAULT_SAVE_PATH, nome_lega: str = "Fantalega"
-    ) -> Lega:
+    ) -> Tuple[bool, Optional[bool]]:
         dir_path = load_path / nome_lega
+        path = dir_path / (nome_lega + ".npz")
 
-        info_lega = np.load(dir_path / (nome_lega + ".npz"))
+        if not os.path.exists(path=path):
+            return (False,)
+
+        info_lega = np.load(path)
         # nome_lega = info_lega["nome_lega"]
         nomi_squadre = info_lega["nomi_squadre"]
         crediti_iniziali = info_lega["crediti_iniziali"]
@@ -150,4 +155,4 @@ class Lega:
         for squadra in lega._squadre.values():
             squadra.load_data(dir_path / "Squadre")
 
-        return lega
+        return True, lega

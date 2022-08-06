@@ -5,8 +5,18 @@ from robinho.pandas_model import PandasModel
 
 
 class AstaModel:
-    def __init__(self, lega: Lega) -> None:
-        self._lega = lega
+    def __init__(
+        self, nome_lega: str, crediti_iniziali: int, nomi_squadre: List[str]
+    ) -> None:
+        self._nome_lega = nome_lega
+        loaded = self.load_data()
+
+        if not loaded:
+            self._lega = Lega(
+                nome_lega=nome_lega,
+                crediti_iniziali=crediti_iniziali,
+                nomi_squadre=nomi_squadre,
+            )
 
     def get_listone_model(self, ruoli: List[str]):
         return PandasModel(self._lega.get_listone(ruoli=ruoli))
@@ -40,8 +50,14 @@ class AstaModel:
 
         return result
 
-    def load_data(self) -> None:
-        self._lega = Lega.load_data(nome_lega=self._lega._nome_lega)
+    def load_data(self) -> bool:
+        result = Lega.load_data(nome_lega=self._nome_lega)
+        success = result[0]
+
+        if success:
+            self._lega = result[1]
+
+        return success
 
     def save_data(self):
         self._lega.save_data()

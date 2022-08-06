@@ -6,14 +6,14 @@ from PySide6.QtWidgets import (
     QTableView,
     QMessageBox,
     QMainWindow,
+    QHeaderView,
 )
-
 from PySide6.QtGui import QAction
 from robinho.asta_model import AstaModel
-from robinho.dataframes_layouts.rosa_layout import RosaLayout
+from robinho.layouts.rosa_layout import RosaLayout
 
-from robinho.inserimento_acquisto_layout import InserimentoAcquistoLayout
-from robinho.ruoli_checkboxes import RuoliCheckboxes
+from robinho.layouts.inserimento_acquisto_layout import InserimentoAcquistoLayout
+from robinho.layouts.ruoli_checkboxes import RuoliCheckboxes
 
 
 class MainWindow(QMainWindow):
@@ -43,16 +43,24 @@ class MainWindow(QMainWindow):
 
         left_layout = QVBoxLayout()
         self._listone_widget = QTableView()
+        self._listone_widget.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeToContents
+        )
         self._listone_checkboxes = RuoliCheckboxes(["P", "D", "C", "A"])
         left_layout.addLayout(self._listone_checkboxes)
         left_layout.addWidget(self._listone_widget)
+        left_layout.setSizeConstraint(QVBoxLayout.SetFixedSize)
 
         self._rosa_layout = RosaLayout(self._asta_model.get_nomi_squadre())
         self._rosa_layout.set_combobox_slot(self._change_rosa_view)
 
         right_layout = QVBoxLayout()
         self._stats_widget = QTableView()
+        self._stats_widget.horizontalHeader().setSectionResizeMode(
+            QHeaderView.ResizeToContents
+        )
         right_layout.addWidget(self._stats_widget)
+        right_layout.setSizeConstraint(QVBoxLayout.SetFixedSize)
 
         dataframes_layout.addLayout(left_layout)
         dataframes_layout.addLayout(self._rosa_layout)
