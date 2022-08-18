@@ -10,8 +10,10 @@ from robinho.Squadra import Squadra
 from robinho.const import (
     DEFAULT_CREDITI,
     DEFAULT_SAVE_PATH,
-    LISTONE_COLUMNS,
-    LISTONE_PATH,
+    LISTONE_CLASSIC_COLUMNS,
+    LISTONE_CLASSIC_PATH,
+    LISTONE_MANTRA_COLUMNS,
+    LISTONE_MANTRA_PATH,
 )
 
 
@@ -20,14 +22,21 @@ class Lega:
         self,
         nome_lega: str,
         nomi_squadre: List[str],
-        path_listone: Path = LISTONE_PATH,
+        path_listone: Path = LISTONE_CLASSIC_PATH,
         crediti_iniziali: int = DEFAULT_CREDITI,
+        mantra: bool = False,
     ) -> None:
         self._crediti_iniziali = crediti_iniziali
+        self._mantra = mantra
+        if mantra:
+            path_listone = LISTONE_MANTRA_PATH
+            self._list_columns = LISTONE_CLASSIC_COLUMNS
+        else:
+            path_listone = LISTONE_CLASSIC_PATH
+            self._list_columns = LISTONE_MANTRA_COLUMNS
+
         self._listone = pd.read_csv(path_listone, index_col=0)
-        self._listone[LISTONE_COLUMNS[3]] = self._listone[LISTONE_COLUMNS[3]].astype(
-            "int"
-        )
+
         self._nome_lega = nome_lega
 
         if nomi_squadre is not None:
@@ -59,13 +68,35 @@ class Lega:
             squadra.save_data(squadre_dir_path)
 
     def get_listone(self, ruoli: List[str]) -> pd.DataFrame:
-        return self._listone[self._listone[LISTONE_COLUMNS[0]].isin(ruoli)]
+        data = self._listone[self._listone[self._list_columns[0]].isin(ruoli)]
+
+        if self._mantra:
+            result = data.sort_values(
+                by=[
+                    self._list_columns[0],
+                    self._list_columns[-2],
+                ],
+                ascending=[False, True, True],
+                inplace=False,
+            )
+        else:
+            result = data.sort_values(
+                by=[
+                    self._list_columns[0],
+                    self._list_columns[-3],
+                    self._list_columns[-2],
+                ],
+                ascending=[False, True, True],
+                inplace=False,
+            )
+
+        return result
 
     def get_nome(self) -> str:
         return self._nome_lega
 
     def get_nomi_giocatori(self) -> List[str]:
-        return self._listone[LISTONE_COLUMNS[1]].values
+        return self._listone[self._list_columns[1]].values
 
     def get_nomi_squadre(self) -> List[str]:
         return list(self._squadre.keys())

@@ -10,6 +10,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QAction
 from robinho.asta_model import AstaModel
+from robinho.const import RUOLI_CLASSIC, RUOLI_MANTRA
 from robinho.layouts.rosa_layout import RosaLayout
 
 from robinho.layouts.inserimento_acquisto_layout import InserimentoAcquistoLayout
@@ -21,6 +22,11 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self._asta_model = model
+
+        if model.mantra:
+            self._ruoli = RUOLI_MANTRA
+        else:
+            self._ruoli = RUOLI_CLASSIC
 
         self._init_ui()
 
@@ -46,7 +52,7 @@ class MainWindow(QMainWindow):
         self._listone_widget.horizontalHeader().setSectionResizeMode(
             QHeaderView.ResizeToContents
         )
-        self._listone_checkboxes = RuoliCheckboxes(["P", "D", "C", "A"])
+        self._listone_checkboxes = RuoliCheckboxes(self._ruoli)
         left_layout.addLayout(self._listone_checkboxes)
         left_layout.addWidget(self._listone_widget)
         left_layout.setSizeConstraint(QVBoxLayout.SetFixedSize)
@@ -90,7 +96,7 @@ class MainWindow(QMainWindow):
         main_widget.setLayout(main_layout)
         self.setCentralWidget(main_widget)
 
-        self._set_listone_model()
+        self._set_listone_model(ruoli=self._ruoli)
         self._set_rosa_model()
         self._set_stats_model()
 
